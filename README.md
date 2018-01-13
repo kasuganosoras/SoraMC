@@ -1,4 +1,7 @@
 # SoraMC-Panel
+<center>
+   <img src="http://ww4.sinaimg.cn/large/0060lm7Tly1fnfh8tr8txj30wl0rs7t8.jpg">
+</center>
 SoraMC Minecraft Server Panel<br>
 这是一个 Minecraft 服务器管理面板<br>
 支持跨平台，多 Daemon 管理，支持群组服务器<br>
@@ -6,6 +9,11 @@ SoraMC 可以说是 PHPMC 3 的续命版本，PHPMC 3 因为开源协议问题�
 这次，改个名字，重新开始搞个大新闻<br>
 <b style="color:#FF0000">注意！此面板目前还是实验性的，存在许多问题，请谨慎使用！</b><br>
 目前还有几个页面没有完成，还在持续更新中...<br>
+吐槽一下...当初设计的时候，是考虑模块化设计的...<br>
+结果呢，写代码的时候开了一首 Sky http://music.163.com/#/m/song?id=29553031&userid=469516848<br>
+所有的设计理念都在电音和抖腿中成为浮云......<br>
+所以你会看到 Loader.php 足足有 43KB ...不要打我...<br>
+反正就是所有东西都往里面塞...<br>
 <br>
 <h2>功能介绍</h2>
 <ul>
