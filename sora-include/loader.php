@@ -1,15 +1,25 @@
 <?php
-//error_reporting(E_ALL);
-define("errtext", "");
+// DEBUG
+// error_reporting(E_ALL);
+define("errtext", ""); // 我也不知道有什么用，留着吧
 class Loader {
 	
+	/**
+	 *
+	 *	页面框架显示控制函数
+	 *
+	 **/
 	public function frame() {
 		include(ROOT . "/sora-include/data/config.php");
-		// echo $saveConfig["SiteName"];
 		$this->cfg = $saveConfig;
 		echo $this::loadPage("panel.html", ROOT . "/sora-content/" . $saveConfig["Template"] . "/");
 	}
 	
+	/**
+	 *
+	 *	生成面板配置文件设置页面函数
+	 *
+	 **/
 	public function getPanelConfig() {
 		include(ROOT . "/sora-include/data/config.php");
 		$num = $this::getDaemonNum();
@@ -121,6 +131,11 @@ class Loader {
 		return $htmlpage;
 	}
 	
+	/**
+	 *
+	 *	配置文件模板函数
+	 *
+	 **/
 	public function panelConfigTemplate() {
 		return "<?php
 \$saveConfig = Array(
@@ -136,6 +151,11 @@ class Loader {
 );";
 	}
 	
+	/**
+	 *
+	 *	Daemon 配置文件模板函数
+	 *
+	 **/
 	public function daemonConfigTemplate() {
 		return '<?php
 $daemon_id = {id};
@@ -145,6 +165,13 @@ $daemon_port = {port};
 $daemon_desc = "{desc}";';
 	}
 	
+	/**
+	 *
+	 *	保存面板设置函数
+	 *
+	 *	$array POST 过来的数据
+	 *
+	 **/
 	public function savePanelConfig($array) {
 		if(($array["SiteName"] == "") || ($array["Description"] == "") || ($array["AesEnKey"] == "") || ($array["ConPasswd"] == "") || ($array["Template"] == "") || ($array["DaemonId"] == "") || ($array["LogServer"] == "") || ($array["LogServerPort"] == "")) {
 			return false;
@@ -173,6 +200,13 @@ $daemon_desc = "{desc}";';
 		return true;
 	}
 	
+	/**
+	 *
+	 *	保存 Daemon 设置函数
+	 *
+	 *	$arr POST 过来的数据
+	 *
+	 **/
 	public function saveDaemonConfig($arr) {
 		if(($arr["did"] == "") || ($arr["name"] == "") || ($arr["host"] == "") || ($arr["port"] == "")) {
 			return false;
@@ -196,6 +230,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	增加新的 Daemon 函数
+	 *
+	 *	$arr POST 过来的数据
+	 *
+	 **/
 	public function addDaemonConfig($arr) {
 		if(($arr["name"] == "") || ($arr["host"] == "") || ($arr["port"] == "")) {
 			return false;
@@ -215,6 +256,13 @@ $daemon_desc = "{desc}";';
 		return true;
 	}
 	
+	/**
+	 *
+	 *	获取 Daemon 信息函数
+	 *
+	 *	$daemonid	Daemon 的 Id
+	 *
+	 **/
 	public function getDaemon($daemonid) {
 		if(@file_exists(ROOT . "/sora-include/data/daemons/daemon_" . $daemonid . ".php")) {
 			include(ROOT . "/sora-include/data/daemons/daemon_" . $daemonid . ".php");
@@ -231,6 +279,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	删除 Daemon 函数
+	 *
+	 *	$arr	POST 过来的数据
+	 *
+	 **/
 	public function deleteDaemonConfig($arr) {
 		if(@file_exists(ROOT . "/sora-include/data/daemons/daemon_" . $arr["did"] . ".php")) {
 			@unlink(ROOT . "/sora-include/data/daemons/daemon_" . $arr["did"] . ".php");
@@ -240,6 +295,11 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	获取 Daemon 列表函数
+	 *
+	 **/
 	public function getDaemonNum() {
 		$path = ROOT . "/sora-include/data/daemons/./";
 		$file = scandir($path);
@@ -252,6 +312,11 @@ $daemon_desc = "{desc}";';
 		return $list;
 	}
 	
+	/**
+	 *
+	 *	生成 Daemon 配置文件列表函数
+	 *
+	 **/
 	public function getDaemonList() {
 		$num = $this::getDaemonNum();
 		$daemonlist = "<table style='width: 100%;margin: auto;line-height: 28px;'>
@@ -358,6 +423,11 @@ $daemon_desc = "{desc}";';
 		return $daemonlist;
 	}
 	
+	/**
+	 *
+	 *	生成新增 Daemon 页面函数
+	 *
+	 **/
 	public function addDaemon() {
 		return "<br>
 							<br>
@@ -415,6 +485,11 @@ $daemon_desc = "{desc}";';
 							</script>";
 	}
 	
+	/**
+	 *
+	 *	检查用户登录状态函数
+	 *
+	 **/
 	public function checkLogin() {
 		if($this::getLoginStatus() === false) {
 			if($_POST["username"] && $_POST["password"]) {
@@ -465,6 +540,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	用户登录函数
+	 *
+	 *	$userinfo POST 过来的数据
+	 *
+	 **/
 	public function userLogin($userinfo) {
 		if(preg_match("/^[A-Za-z0-9\-\_]+$/", $userinfo["username"])) {
 			if(file_exists(ROOT . "/sora-include/data/users/" . $userinfo["username"] . ".php")) {
@@ -482,6 +564,11 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	获取登录状态函数
+	 *
+	 **/
 	public function getLoginStatus() {
 		SESSION_START();
 		if($_SESSION["user"] == "") {
@@ -491,6 +578,15 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	检查用户权限函数
+	 *
+	 *	$perm	需要检查的权限
+	 *
+	 *	$puser	需要检查的用户名
+	 *
+	 **/
 	public function checkPerm($perm, $puser) {
 		$perm = str_replace(".html", "", $perm);
 		if($perm == "view.page.login") {
@@ -516,6 +612,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	获取用户的所有权限
+	 *
+	 *	$puser	需要获取的用户名
+	 *
+	 **/
 	public function getPerm($puser) {
 		if($puser == "") {
 			return "Permission denied";
@@ -528,6 +631,15 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	页面加载函数
+	 *
+	 *	$pageName	页面文件名
+	 *
+	 *	$pagePath	页面所在路径
+	 *
+	 **/
 	public function loadPage($pageName, $pagePath) {
 		include(ROOT . "/sora-include/data/config.php");
 		$conf = $saveConfig;
@@ -559,6 +671,17 @@ $daemon_desc = "{desc}";';
 		return $filecontent;
 	}
 	
+	/**
+	 *
+	 *	框架内页面展示函数
+	 *
+	 *	$status		状态码
+	 *
+	 *	$perm		所需要的权限
+	 *
+	 *	$haveperm	所拥有的权限
+	 *
+	 **/
 	public function inFramePage($status, $perm, $haveperm) {
 		switch($status) {
 			case 403:
@@ -571,6 +694,21 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	框架内页面展示模板函数
+	 *
+	 *	$bigtitle		大标题
+	 *
+	 *	$title			子标题 A
+	 *
+	 *	$description	文本 A
+	 *
+	 *	$title2			子标题 B
+	 *
+	 *	$description2	文本 B
+	 *
+	 **/
 	public function framePageTemplate($bigtitle, $title, $description, $title2, $description2) {
 		return "<html>
 	<head>
@@ -627,18 +765,32 @@ $daemon_desc = "{desc}";';
 </html>";
 	}
 	
+	/**
+	 *
+	 *	清除 UTF-8 头部 BOM 函数
+	 *
+	 *	$text	文本内容
+	 *
+	 **/
 	public function clearBOM($text){
     if(substr($text, 0, 3) == pack("CCC", 0xEF, 0xBB, 0xBF)) $text = substr($text, 9);
 		return $text;
 	}
 	
+	/**
+	 *
+	 *	插件加载函数
+	 *
+	 **/
 	public function plugin() {
-		if($_GET["s"]) {
-			passthru(ROOT . "/sora-include/plugins/sys_info.exe>C:/test.txt");
-			exit;
-		}
+		// 占位待更
 	}
 	
+	/**
+	 *
+	 *	页面主路由函数
+	 *
+	 **/
 	public function router() {
 		if(preg_match("/^[A-Za-z0-9\-]+$/", $_GET["page"])) {
 			include(ROOT . "/sora-include/data/config.php");
@@ -845,6 +997,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	错误页面函数
+	 *
+	 *	$status		错误状态码
+	 *
+	 **/
 	public function errorPage($status) {
 		$errorPage = file_get_contents(ROOT . "/sora-content/error/" . $status . ".html");
 		$errorPage = str_replace("{PATH}", DOCROOT . "/sora-content", $errorPage);
@@ -852,6 +1011,13 @@ $daemon_desc = "{desc}";';
 		return $errorPage;
 	}
 	
+	/**
+	 *
+	 *	服务器通讯函数
+	 *
+	 *	$args	参数内容，Array 格式
+	 *
+	 **/
 	public function serverConnect($args) {
 		include(ROOT . "/sora-include/data/config.php");
 		include_once(ROOT . "/sora-include/plugins/AES.php");
@@ -883,6 +1049,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	服务器登录函数
+	 *
+	 *	$args	参数内容，Array 格式
+	 *
+	 **/
 	public function serverLogin($args) {
 		include(ROOT . "/sora-include/data/config.php");
 		include_once(ROOT . "/sora-include/plugins/AES.php");
@@ -913,6 +1086,11 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	系统信息页面模板函数
+	 *
+	 **/
 	public function systemInfo() {
 		include(ROOT . "/sora-include/data/config.php");
 		$conf = $saveConfig;
@@ -999,6 +1177,13 @@ $daemon_desc = "{desc}";';
 </table>";
 	}
 	
+	/**
+	 *
+	 *	系统信息获取函数
+	 *
+	 *	$info	需要获取的内容
+	 *
+	 **/
 	public function getSoraMC($info) {
 		switch($info) {
 			case "version":
@@ -1042,6 +1227,11 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	服务端设置页面生成函数
+	 *
+	 **/
 	public function serverConfig() {
 		include(ROOT . "/sora-include/data/config.php");
 		$keys = $saveConfig["AesEnKey"];
@@ -1049,6 +1239,11 @@ $daemon_desc = "{desc}";';
 		return $this::getConfigHtml($cfgFile) . $this::getConfigJs($cfgFile) . "<button class='submitconfig' onclick='submitconfig()'>     保存核心设置      </button>";
 	}
 	
+	/**
+	 *
+	 *	系统设置页面生成函数
+	 *
+	 **/
 	public function systemConfig() {
 		include(ROOT . "/sora-include/data/config.php");
 		$keys = $saveConfig["AesEnKey"];
@@ -1081,6 +1276,15 @@ $daemon_desc = "{desc}";';
 		return $htmlpage;
 	}
 	
+	/**
+	 *
+	 *	Ini 格式配置文件读取函数
+	 *
+	 *	$config		配置文件内容
+	 *
+	 *	$need		需要获取的键名
+	 *
+	 **/
 	public function getConfigTag($config, $need) {
 		if(stristr($config, "\r\n")) {
 			$gettag = explode("\r\n", $config);
@@ -1095,6 +1299,13 @@ $daemon_desc = "{desc}";';
 		}
 	}
 	
+	/**
+	 *
+	 *	生成服务器核心配置文件页面
+	 *
+	 *	$config		配置文件内容
+	 *
+	 **/
 	public function getConfigHtml($config) {
 		$htmltext = "<span>此处是服务器核心配置，左侧为配置项，右侧为值。</span>
 							<table style='width: 100%;margin: auto;line-height: 28px;' class='serverconfig'>";
@@ -1120,6 +1331,13 @@ $daemon_desc = "{desc}";';
 							</table>";
 	}
 	
+	/**
+	 *
+	 *	生成 AJAX 表单提交 JS 函数
+	 *
+	 *	$config		配置文件内容
+	 *
+	 **/
 	public function getConfigJs($config) {
 		$htmltext = "
 							<script type='text/javascript'>
@@ -1175,6 +1393,17 @@ $daemon_desc = "{desc}";';
 							</script>";
 	}
 	
+	/**
+	 *
+	 *	Minecraft 服务器信息查询函数
+	 *
+	 *	$addres		服务器 IP 地址
+	 *
+	 *	$port		服务器端口
+	 *
+	 *	$timeout	超时时间
+	 *
+	 **/
 	public function serverQuery($addres, $port = 25565, $timeout = 2) {
 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => (int)$timeout, 'usec' => 0));
