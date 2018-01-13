@@ -14,6 +14,7 @@ SoraMC 可以说是 PHPMC 3 的续命版本，PHPMC 3 因为开源协议问题�
 所有的设计理念都在电音和抖腿中成为浮云......<br>
 所以你会看到 Loader.php 足足有 43KB ...不要打我...<br>
 反正就是所有东西都往里面塞...<br>
+本项目对应的 Daemon：https://github.com/kasuganosoras/SoraMC-Daemon<br>
 <br>
 <h2>测试地址</h2>
 地址：http://www.kasuganosora.cn/SoraMC/<br>
