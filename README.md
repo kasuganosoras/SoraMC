@@ -15,6 +15,11 @@ SoraMC 可以说是 PHPMC 3 的续命版本，PHPMC 3 因为开源协议问题�
 所以你会看到 Loader.php 足足有 43KB ...不要打我...<br>
 反正就是所有东西都往里面塞...<br>
 <br>
+<h2>测试地址</h2>
+地址：http://www.kasuganosora.cn/SoraMC/<br>
+账户：testuser<br>
+密码：123456<br>
+权限：查看、开启、关闭服务器、发送命令<br>
 <h2>功能介绍</h2>
 <ul>
   <li>可视化的 Minecraft 服务器管理</li>
@@ -28,7 +33,15 @@ SoraMC 可以说是 PHPMC 3 的续命版本，PHPMC 3 因为开源协议问题�
   <li>支持自定义模板，创建属于你自己的面板</li>
   <li>多种实用工具，方便快捷</li>
 </ul>
-<br>
+<h2>界面效果</h2>
+<center>
+   <img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfhw8iv9lj311y0hyjs7.jpg"><br>
+   <img src="http://ww3.sinaimg.cn/large/0060lm7Tly1fnfhw8jfd0j311y0hydgr.jpg"><br>
+   <img src="http://ww2.sinaimg.cn/large/0060lm7Tly1fnfhw8jkomj311y0hw75t.jpg"><br>
+   <img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfhw8j21hj311y0hyab1.jpg"><br>
+   <img src="http://ww2.sinaimg.cn/large/0060lm7Tly1fnfhw8jsg2j311y0hy3zq.jpg"><br>
+   <img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfhw8kt0pj311y0hxt9o.jpg"><br>
+</center>
 <h2>更新记录</h2>
 2018.1.05 开工<br>
 2018.1.06 设计基础通讯<br>
