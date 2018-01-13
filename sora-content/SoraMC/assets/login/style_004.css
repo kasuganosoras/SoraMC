@@ -1,0 +1,12 @@
+.java_manager_installed {
+	color: green;
+}
+
+.java_manager_uninstalled {
+	color: red;
+}
+
+.java_manager_installer_list ol li {
+	list-style: decimal;
+	margin: 10px 0 0 0;
+}

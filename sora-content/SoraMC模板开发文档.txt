@@ -1,0 +1,53 @@
+    
+    欢迎阅读此文档！本文档将会教您如何快速写一个 SoraMC 的模板！
+
+    您可以直接从网上寻找好看的模板，然后直接进行简单的字符串替换即可！
+
+    ==== 下面，开始制作一个模板吧！
+
+    一、模板名称
+      1.先起个名字，例如 SoraMCtest
+      2.在 SoraMC/sora-content/ 下新建文件夹，名为 SoraMCtest
+      3.编写第一个页面
+
+
+    二、页面介绍
+    
+      首先，您一定要记得创建一个 panel.html，这是页面框架主体，当 URL 中的 ?page= 为空的时候，会默认加载该页面。
+      
+      当然您也可以不需要用框架(iframe)，您大可将 panel.html 作为首页。
+
+
+    三、字符串替换说明
+
+      文档中会动态替换的内容有
+      
+     {SITENAME}		站点名字
+     {CONTENTDIR}	资源文件所在目录，内容为 ./sora-content
+     {TEMPLATE}		当前启用的模板，例如 SoraMCtest
+     {SYSTEMINFO}	系统信息
+     {SERVERCONFIG}	服务端核心配置
+     {SYSTEMCONFIG} 	Java 路径、最大内存、核心名称设置
+     {USERNAME}		登陆的用户名
+     {CONSOLELOGURL}	控制台日志 AJAX 地址
+     {CHATLOGURL}	聊天栏消息 AJAX 地址
+
+    四、简单的模板例子
+
+      例如写一个简单的首页
+
+	<html>
+    	    <head>
+		<title>{SITENAME} - Minecraft 服务器管理面板</title>
+		<link href="{CONTENTDIR}/{TEMPLATE}/assets/style.min862f.css" rel="stylesheet">
+		<script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.min.js"></script>
+    	    </head>
+    	    <body>
+		<h2>{SITENAME}</h2>
+		<p>你好，{USERNAME}</p>
+		<p>服务器信息：</p>
+		{SYSTEMINFO}
+    	    </body>
+	</html>
+
+    后续将会继续增加更多 API，敬请期待！

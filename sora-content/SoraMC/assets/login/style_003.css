@@ -1,0 +1,65 @@
+.git-btn .x-btn-tl,
+.git-btn .x-btn-tc,
+.git-btn .x-btn-tr,
+.git-btn .x-btn-bl,
+.git-btn .x-btn-bc,
+.git-btn .x-btn-br {
+	display: none;
+}
+
+.git-btn .x-btn-ml i, .git-btn .x-btn-mr i {
+	width: 12px;
+}
+
+.git-btn .x-btn-ml {
+	background-image: url(images/bt_a.png);
+	background-position: 0 0;
+	height: 22px;
+}
+
+.git-btn .x-btn-over .x-btn-ml {
+	background-position: 0 -66px;
+}
+
+.git-btn .x-btn-click .x-btn-ml {
+	background-position: 0 -132px;
+}
+
+.git-btn .x-item-disabled .x-btn-ml {
+	background-position: 0 -198px;
+}
+
+.git-btn .x-btn-mc {
+	background-image: url(images/bt_a.png);
+	background-position: 0 -22px;
+}
+
+.git-btn .x-btn-over .x-btn-mc {
+	background-position: 0 -88px;
+}
+
+.git-btn .x-btn-click .x-btn-mc {
+	background-position: 0 -154px;
+}
+
+.git-btn .x-item-disabled .x-btn-mc {
+	background-position: 0 -220px;
+}
+
+.git-btn .x-btn-mr {
+	background-image: url(images/bt_a.png);
+	background-position: 0 -44px;
+	height: 22px;
+}
+
+.git-btn .x-btn-over .x-btn-mr {
+	background-position: 0 -110px;
+}
+
+.git-btn .x-btn-click .x-btn-mr {
+	background-position: 0 -176px;
+}
+
+.git-btn .x-item-disabled .x-btn-mr {
+	background-position: 0 -242px;
+}

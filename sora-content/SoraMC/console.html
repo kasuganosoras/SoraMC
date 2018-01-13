@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{SITENAME} - Minecraft 服务器管理面板</title>
+        <meta name="keywords" content="&lt;block name=&#39;keywords&#39;&gt;">
+        <meta name="description" content="&lt;block name=&#39;description&#39;&gt;">
+        <link rel="shortcut icon" href="{CONTENTDIR}/{TEMPLATE}/assets/favicon.ico">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/bootstrap.min14ed.css" rel="stylesheet">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/font-awesome.min93e3.css" rel="stylesheet">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/animate.min.css" rel="stylesheet">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/style.min862f.css" rel="stylesheet">
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/bootstrap.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.metisMenu.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.slimscroll.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/layer.min.js"></script>
+        <link rel="stylesheet" href="{CONTENTDIR}/{TEMPLATE}/assets/layer.css" id="layui_layer_skinlayercss" style="">
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/hplus.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/contabs.min.js"></script>
+        <script>
+			var oldlog;
+			function ajaxload() {
+				try {
+					$(document).ready(function(){
+						var start = new Date();
+						htmlobj=$.ajax({url:"{CONSOLELOGURL}", async:true, timeout:5000, error: function(){
+							$("#ping").html("连接超时");
+							window.parent.frames.showmsg("无法连接至 Daemon 服务器。");
+						}, success: function() {
+							var end = new Date() - start;
+							$("#ping").html(end + " 毫秒");
+							if(oldlog != htmlobj.responseText) {
+								$("#debug").html("<code style='color: #333;background-color: #FFF;padding: 0px;'>" 
+								+ htmlobj.responseText.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g,"<br />")
+								.replace(/INFO\]/g, "<span style='color: #00B100'>信息</span>]").replace(/WARN\]/g, "<span style='color: #FF8700'>警告</span>]")
+								.replace(/ERROR\]/g, "<span style='color: #FF0000'>错误</span>]").replace(/\[Server/g, "[服务器").replace(/thread\//g, "主线程/")
+								.replace(/Done \(/g, "<span style='color: #00B100'>启动完成，耗时 (")
+								.replace(/s\)\! For help\, type \"help\" or \"\?\"/g, " 秒)！需要帮助，请输入 “help” 或 “?”</span>")
+								.replace(/Unknown command\. Type \"\/help\" for help\./g, "未知命令，请输入 “help” 查看帮助。")
+								.replace(/Usage\:/g, "使用方法：").replace(/Stopping the server/g, "正在关闭服务器")
+								.replace(/You need to agree to the EULA in order to run the server. Go to eula.txt for more info./, 
+								"<span style='color: #FF8700'>你需要接受 EULA 协议才能开启服务器，编辑服务端的 eula.txt ，将 eula=false 改为 eula=true 并保存即可。</span>")
+								.replace(/Stopping server/, "正在终止服务器进程").replace(/Loading properties/, "正在加载配置文件")
+								.replace(/Failed to load/, "无法加载").replace(/Starting minecraft server version/, "正在启动 Minecraft 服务器，版本：")
+								.replace(/Default game type:/, "默认游戏模式：") + "</code>");
+								document.getElementById("debug").scrollTop = document.getElementById("debug").scrollHeight;
+								oldlog += htmlobj.responseText.replace(oldlog, "");
+							}
+							setTimeout("ajaxload()", 1500);
+						}});
+					});
+				} catch(Exception) {
+					window.parent.frames.showmsg("无法连接至 Daemon 服务器。");
+				}
+			};
+			window.onkeydown = function(event){
+				if(event.keyCode==13) {
+					var command = document.getElementById("command").value;
+					htmlobj=$.ajax({url:"?command=" + command, async:true, timeout:5000, error: function(){
+						window.parent.frames.showmsg(htmlobj.responseText);
+					}, success: function() {
+						document.getElementById("command").value = "";
+					}});
+					return false;                               
+				}
+			};
+			window.onload = function() {
+				ajaxload();
+				serverStatus();
+			};
+			function startServer() {
+				htmlobj=$.ajax({url:"?do=start", async:true, timeout:5000, error: function(){
+					window.parent.frames.showmsg(htmlobj.responseText);
+				}});
+			};
+			function stopServer() {
+				htmlobj=$.ajax({url:"?do=stop", async:true, timeout:5000, error: function(){
+					window.parent.frames.showmsg(htmlobj.responseText);
+				}});
+			};
+			function restartServer() {
+				htmlobj=$.ajax({url:"?do=restart", async:true, timeout:5000, error: function(){
+					window.parent.frames.showmsg(htmlobj.responseText);
+				}});
+			};
+			function serverStatus() {
+				htmlobjs=$.ajax({url:"?info=status", async:true, timeout:5000, success: function(){
+					var rpt = htmlobjs.responseText;
+					var fallback = rpt.split("\/");
+					$("#online").html(fallback[0]);
+					$("#max").html(fallback[1]);
+					setTimeout(serverStatus, 10000);
+				}});
+			};
+		</script>
+        <link rel="stylesheet" href="{CONTENTDIR}/{TEMPLATE}/assets/layer.ext.css" id="layui_layer_skinlayerextcss" style="">
+        <link rel="stylesheet" href="{CONTENTDIR}/{TEMPLATE}/assets/style.css" id="layui_layer_skinmoonstylecss" style=""></head>
+    
+    <body class="fixed-sidebar full-height-layout gray-bg">
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>服务器控制台</h5></div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">
+                                <span class="text-info" id="online"></span> /
+                                <span class="text-danger" id="max"></span></h1>
+                            <small>在线玩家 / 最大在线</small>
+							<br>
+							<span>当前延迟：<span id="ping">Pinging ...</span></span>
+							<br><br>
+							<button class="control" id="btn1" onclick="startServer()">开启</button>
+							<div class="s8px"></div>
+							<button class="control" id="btn2" onclick="stopServer()">关闭</button>
+							<div class="s8px"></div>
+							<button class="control" id="btn3" onclick="restartServer()">重启</button></div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>服务器控制台</h5>
+						</div>
+                        <div class="ibox-content" style="">
+							<div id="debug" class="console"></div>
+							<span class="inputtag">&gt;&nbsp;</span>
+							<input id="command" placeholder="在此处输入命令，Enter 提交">
+						</div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="ext-strict">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=11">
+		<meta name="application-name" content="Niconico Craft&nbsp;User&nbsp;Center">
+		<meta name="msapplication-TileColor" content="#246BB3">
+		<meta name="keywords" content="SoraMC,KasuganoSora,穹妹,Minecraft,我的世界,mcremix,mc-remix,tcotp,幻影都市,小游戏,联机,服务器,末日生存,bbs.mc-remix.com,mc,NNC妮可世界,群组,麦块,Server,PHPMC">
+		<meta name="description" content="Kasugano Sora Minecraft Server Panel，一款强大的 Minecraft 服务器面板">
+		<meta name="author" content="jianghao7172">
+		<link rel="shortcut icon" href="{CONTENTDIR}/{TEMPLATE}/assets/favicon.ico?v=4399">
+		<title>{SITENAME} - Minecraft 服务器管理面板</title>
+		<script type="text/javascript" src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/ext-all.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/xtheme-gray.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/ux-all.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/sds.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/desktop.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_004.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_007.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_005.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_006.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_003.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_010.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_011.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_008.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_002.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_014.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_009.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_012.css">
+		<link rel="stylesheet" type="text/css" href="{CONTENTDIR}/{TEMPLATE}/assets/login/style_013.css">
+		<style type="text/css">
+			.loginhelp{
+				height:32px;
+				position:absolute;
+				left:20px;
+				color:rgba(255,255,255,0.7);
+				text-decoration:none;
+			}
+			.loginhelp:hover{
+				color:rgba(255,255,255,1);
+				cursor:pointer;
+				text-decoration:none;
+			}
+			.signus{
+				height:32px;
+				margin-right: 20px;
+				float:right;
+				color:rgba(255,255,255,0.7);
+				text-decoration:none;
+			}
+			.signus:hover{
+				color:rgba(255,255,255,1);
+				cursor:pointer;
+				text-decoration:none;
+			}
+			.messagebg {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				z-index: 99999999999;
+				background: rgba(0,0,0,0.75);
+			}
+			.messagebg .messagebox {
+				width: 512px;
+				height: 128px;
+				margin: auto;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+				background: #FFF;
+				box-shadow: 0px 0px 20px #000;
+				border-radius: 8px;
+			}
+			.messagebg .messagebox table {
+				width: 90%;
+				margin: auto;
+			}
+			.messagebg .messagebox h2 {
+				font-size: 24px;
+				margin-top: 16px;
+				margin-bottom: 8px;
+				font-weight: normal;
+			}
+		</style>
+	</head>
+	<body role="application" class=" ext-gecko ext-gecko3" id="ext-gen3">
+		<div class="messagebg" id="messagebg" style="display: none;">
+			<div class="messagebox">
+				<table>
+					<tr>
+						<td>
+							<h2>提示信息</h2>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="msgcontent">
+								测试
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var isopenmsgbox = false;
+			function showmsg(text) {
+				$("#messagebg").fadeIn(300);
+				$("#msgcontent").html(text);
+				isopenmsgbox = true;
+			}
+			$("#messagebg").click(function (){
+				if(isopenmsgbox) {
+					$("#messagebg").fadeOut(300);
+					isopenmsgbox = false;
+				}
+			});
+			function progressshow(text) {
+				$("#messagebg").fadeIn(300);
+				$("#msgcontent").text(text);
+			}
+			function progressunshow() {
+				$("#messagebg").fadeOut(300);
+			}
+			function login() {
+				var urname = document.getElementById("login_username").value;
+				var passwd = document.getElementById("login_passwd").value;
+				htmlobj = $.ajax({
+					url: "?page=login",
+					type: 'POST',
+					async: true,
+					error: function() {
+						showmsg(htmlobj.responseText)
+					},
+					success: function() {
+						window.location = "./";
+					},
+					data: {
+						username: urname,
+						password: passwd
+					}
+				});
+			};
+		</script>
+		<div id="sds-wallpaper"></div>
+		<!-- Don't contain any text node to avoid IE insertBefore bug -->
+		<div id="sds-apply-preview-form" style="position: absolute; top: -10000px; left: -10000px; display: none;">
+			<form id="preview-form" class="x-plain-body" method="POST" action="" target="preview_iframe">
+				<input id="preview_submit" style="position: absolute; top: -10000px; left: -10000px;" tabindex="-1" type="submit">
+			</form>
+			<iframe id="preview_iframe" name="preview_iframe" style="display: none;" frameborder="0" height="0" width="0"></iframe>
+		</div>
+		<style type="text/css">.flexcroll-hide-default { overflow: hidden !important; } </style>
+		<div class="pre-load-x-window-br"></div>
+		<noscript>
+			<div class='syno-no-script'>
+				<div class='title align-center'>Sorry，此页面无法显示</div>
+				<div class='desc align-center'>请让您的浏览器运行 JavaScript。</div>
+				<div class='icon align-center'>或者更换支持JavaScript的浏览器。</div>
+			</div>
+		</noscript>
+		<div id="ext-comp-1012" class=" x-tip-invalid" style="position: absolute; z-index: 2147483647; visibility: hidden; display: none;" aria-disabled="false">
+			<div class="x-tip-invalid-tl">
+				<div class="x-tip-invalid-tr">
+					<div class="x-tip-invalid-tc">
+						<div class="x-tip-invalid-header" id="ext-gen4">
+							<span class="x-tip-invalid-header-text"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-tip-invalid-bwrap" id="ext-gen5">
+				<div class="x-tip-invalid-ml">
+					<div class="x-tip-invalid-mr">
+						<div class="x-tip-invalid-mc" id="ext-gen8">
+							<div class="x-tip-invalid-body" id="ext-gen6" style="height: auto;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="x-tip-invalid-bl x-panel-nofooter" id="ext-gen7">
+					<div class="x-tip-invalid-br">
+						<div class="x-tip-invalid-bc"></div>
+					</div>
+				</div>
+			</div>
+			<div class="x-tip-anchor x-tip-anchor-top" id="ext-gen9" style="z-index: 2147483647;"></div>
+		</div>
+		<div id="ext-comp-1013" class="x-tip" style="position: absolute; z-index: 20002; visibility: hidden; display: none;" aria-disabled="false">
+			<div class="x-tip-tl">
+				<div class="x-tip-tr">
+					<div class="x-tip-tc">
+						<div class="x-tip-header" id="ext-gen11">
+							<span class="x-tip-header-text"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="x-tip-bwrap" id="ext-gen12">
+				<div class="x-tip-ml">
+					<div class="x-tip-mr">
+						<div class="x-tip-mc" id="ext-gen15">
+							<div class="x-tip-body" id="ext-gen13" style="height: auto;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="x-tip-bl x-panel-nofooter" id="ext-gen14">
+					<div class="x-tip-br">
+						<div class="x-tip-bc"></div>
+					</div>
+				</div>
+			</div>
+			<div class="x-tip-anchor x-tip-anchor-top" id="ext-gen16" style="z-index: 20003;"></div>
+		</div>
+		<div id="sds-login" class=" sds-login-light " aria-disabled="false" style="background-color: rgb(255, 255, 255);">
+			<div id="sds-login-background" class=" sds-login-background" style="width: 1920px; height: 943px;" aria-disabled="false">
+				<div id="ext-comp-1014" aria-disabled="false">
+					<div id="ext-gen19" class="" ;="" style="background-color: #FFFFFF; width: 1920px; height: 943px; visibility: visible;">
+						<img id="ext-gen18" style="position: absolute; visibility: visible; width: 1920px; height: 1080px; left: 0px; top: -68.5px;" src="./{CONTENTDIR}/{TEMPLATE}/assets/login/login_background.jpg" draggable="false">
+					</div>
+				</div>
+			</div>
+			<div id="ext-comp-1017" class=" sds-blur-layer" aria-disabled="false">
+				<div id="sds-blur-wrap" class=" sds-blur-wrap" aria-disabled="false" style="width: 320px; height: 236px; margin-left: 800px; margin-top: 293px;">
+					<div id="sds-blur-bkg" class=" sds-login-background" style="width: 1920px; height: 943px; left: -800px; top: -293px;" aria-disabled="false">
+						<div id="ext-comp-1015" aria-disabled="false">
+							<div id="ext-gen22" class="" ;="" style="background-color: #FFFFFF; width: 1920px; height: 943px; visibility: visible;">
+								<img id="ext-gen21" style="position: absolute; visibility: visible; width: 1920px; height: 1080px; left: 0px; top: -68.5px;" src="{CONTENTDIR}/{TEMPLATE}/assets/login/login_background.jpg" draggable="false">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="sds-status-blur-wrap" class="sds-blur-wrap" aria-disabled="false" style="width: 0px; height: 0px; margin-left: 0px; margin-top: 0px;">
+					<div id="sds-status-blur-bkg" class=" sds-login-background" style="width: 1920px; height: 943px; left: 0px; top: 0px;" aria-disabled="false">
+						<div id="ext-comp-1016" aria-disabled="false">
+							<div id="ext-gen26" class="" style="background-color: #ccc; width: 1920px; height: 943px; visibility: visible;">
+								<img id="ext-gen25" style="position: absolute; visibility: visible; width: 1920px; height: 1080px; left: 0px; top: -68.5px;" src="{CONTENTDIR}/{TEMPLATE}/assets/login/login_background.jpg" draggable="false">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="ext-comp-1023" class="sds-login-welcome-info" aria-disabled="false">
+				<div id="ext-comp-1022" class=" sds-login-welcome-info-wrapper" aria-disabled="false" style="max-height: 873px;">
+					<div id="ext-comp-1018" class=" sds-login-welcome-info-container" aria-disabled="false">
+						<div class="sds-login-welcome-info-title" ext:qtip="Welcome" id="ext-comp-1019" aria-disabled="false">Welcome</div>
+					</div>
+					<div id="ext-comp-1020" class=" sds-login-welcome-info-container" aria-disabled="false">
+						<div class="sds-login-welcome-info-msg" ext:qtip="欢迎登录 {SITENAME}" id="ext-comp-1021" aria-disabled="false">欢迎登录 {SITENAME}</div>
+					</div>
+				</div>
+			</div>
+		<div id="sds-login-dialog" style="height: auto; left: 780px; top: 239.85px;" aria-disabled="false">
+			<div id="sds-login-dialog-title" aria-disabled="false">{SITENAME}</div>
+				<div id="sds-login-dialog-form" class=" x-plain extra-padding x-plain-noborder x-form-label-left syno-ux-formpanel syno-ux-formpanel-no-fbar syno-ux-formpanel-no-tbar" style="width: 320px;" role="log" aria-live="assertive" aria-disabled="false">
+					<!--<iframe id="login_iframe" name="login_iframe" style="display: none;" frameborder="0" height="0" width="0"></iframe>-->
+						<div class="x-plain-bwrap" id="ext-gen39">
+							<form id="" class="x-plain-body x-plain-body-noheader x-plain-body-noborder x-form" method="POST" action="?page=login" target="login_iframe" style="width: 320px;box-shadow: 0px 0px 16px #333;">
+								<div id="login-inner-panel" class=" x-panel login-inner-panel syno-ux-panel x-panel-noborder" aria-disabled="false" style="width: 320px;background: rgba(255,255,255,0.3);">
+									<div class="x-panel-bwrap" id="ext-gen41">
+										<div class="x-panel-body x-panel-body-noheader x-panel-body-noborder" id="ext-gen42" style="width: 320px;">
+											<div id="ext-comp-1026" class=" sds-icon-text-field " aria-disabled="false">
+												<div id="ext-comp-1024" class=" icon user-icon" aria-disabled="false"></div>
+												<input class="x-form-text x-form-field textfield" id="login_username" name="username" maxlength="256" aria-describedby="ext-gen56" aria-label="用户帐号" aria-readonly="false" aria-required="false" aria-disabled="false" aria-invalid="false" type="text">
+												<div role="presentation" class="x-form-hidden-error-msg" id="ext-gen56"></div>
+											</div>
+											<div id="ext-comp-1029" class=" sds-icon-text-field " aria-disabled="false">
+												<div id="ext-comp-1027" class=" icon passwd-icon" aria-disabled="false"></div>
+												<input class="x-form-text x-form-field textfield" id="login_passwd" name="password" maxlength="256" autocomplete="off" aria-describedby="ext-gen57" aria-label="密码" aria-readonly="false" aria-required="false" aria-disabled="false" type="password">
+												<div role="presentation" class="x-form-hidden-error-msg" id="ext-gen57"></div>
+											</div>
+										<span id="login-btn" onclick="login()" cellspacing="0" class="x-btn syno-ux-button syno-ux-button-blue x-btn-noicon" style="margin-left: 0px; width: 278px; height: 38px;">
+											<em class=" x-unselectable" unselectable="on">
+												<button type="button" id="loginbtn" aria-label="登入" class="x-btn-text">登入</button>
+											</em>
+										</span>
+										<!--<div class="loginhelp">
+											<span onclick="location='?page=findpass'">忘记密码？</span>
+										</div>
+										<div class="signus">
+											<span onclick="location='?page=register'">没有账号？</span>
+										</div>-->
+									</div>
+								</div>
+							</div>
+							<div class="x-form-item  x-hide-label x-hide-display" tabindex="-1" id="ext-gen43">
+								<label for="sds-login-dialog-status" style="width:180px;" class="x-form-item-label" id="ext-gen44"></label>
+								<div class="x-form-element" id="x-form-el-sds-login-dialog-status" style="padding-left:185px">
+									<div id="sds-login-dialog-status" name="sds-login-dialog-status" class=" x-form-display-field x-hide-display" aria-describedby="ext-gen45" aria-readonly="false" aria-required="false" aria-disabled="false"></div>
+									<div role="presentation" class="x-form-hidden-error-msg" id="ext-gen45"></div>
+								</div>
+								<div class="x-form-clear-left"></div>
+							</div>
+							<input size="20" autocomplete="off" id="ext-comp-1034" name="__cIpHeRtExT" class=" x-form-hidden x-form-field" aria-describedby="ext-gen46" aria-readonly="false" aria-required="false" aria-disabled="false" type="hidden">
+							<input size="20" autocomplete="off" id="ext-comp-1035" name="isIframeLogin" class=" x-form-hidden x-form-field" aria-describedby="ext-gen47" aria-readonly="false" aria-required="false" aria-disabled="false" value="yes" type="hidden">
+							<input size="20" autocomplete="off" id="ext-comp-1036" name="enable_device_token" class=" x-form-hidden x-form-field" aria-describedby="ext-gen48" aria-readonly="false" aria-required="false" aria-disabled="false" type="hidden">
+							<input id="login_submit" style="position: absolute; top: -10000px; left: -10000px;" tabindex="-1" type="submit">
+							<div role="presentation" class="x-form-hidden-error-msg" id="ext-gen46"></div>
+							<div role="presentation" class="x-form-hidden-error-msg" id="ext-gen47"></div>
+							<div role="presentation" class="x-form-hidden-error-msg" id="ext-gen48"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function change(){
+				var viewlong = document.body.clientWidth;
+				var viewhight = document.body.clientHeight;
+				var nowlong = viewlong - 360 ;
+				var nowlong2 = nowlong / 2 ;
+				var nowlong3 = viewhight - 302 ;
+				var nowlong4 = nowlong3 / 2 ;
+				document.getElementById('sds-login-dialog').style.left=nowlong2+'px';
+				document.getElementById('sds-login-dialog').style.top=nowlong4+'px';
+				document.getElementById('sds-blur-wrap').style.display='none';
+			}
+			setInterval(change,1);
+		</script>
+		<footer style="position:fixed;bottom:15px;left:15px;z-index:999999999;">
+				<span style="color:#FFF;">Powered by SoraMC</span>
+		</footer>
+	</body>
+</html>

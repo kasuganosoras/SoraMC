@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{SITENAME} - Minecraft 服务器管理面板</title>
+        <meta name="keywords" content="&lt;block name=&#39;keywords&#39;&gt;">
+        <meta name="description" content="&lt;block name=&#39;description&#39;&gt;">
+        <link rel="shortcut icon" href="{CONTENTDIR}/{TEMPLATE}/assets/favicon.ico">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/bootstrap.min14ed.css" rel="stylesheet">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/font-awesome.min93e3.css" rel="stylesheet">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/animate.min.css" rel="stylesheet">
+        <link href="{CONTENTDIR}/{TEMPLATE}/assets/style.min862f.css" rel="stylesheet">
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/bootstrap.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.metisMenu.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/jquery.slimscroll.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/layer.min.js"></script>
+        <link rel="stylesheet" href="{CONTENTDIR}/{TEMPLATE}/assets/layer.css" id="layui_layer_skinlayercss" style="">
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/hplus.min.js"></script>
+        <script src="{CONTENTDIR}/{TEMPLATE}/assets/contabs.min.js"></script>
+        <link rel="stylesheet" href="{CONTENTDIR}/{TEMPLATE}/assets/layer.ext.css" id="layui_layer_skinlayerextcss" style="">
+        <link rel="stylesheet" href="{CONTENTDIR}/{TEMPLATE}/assets/style.css" id="layui_layer_skinmoonstylecss" style=""></head>
+    <body class="fixed-sidebar full-height-layout gray-bg">
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>系统设置</h5></div>
+                        <div class="ibox-content">
+                            <span>您可以在这里修改 Panel 端的设定</span>
+							{PANELCONFIG}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<script type="text/javascript">
+			function connectInfo() {
+				var start = new Date();
+				htmlobj0=$.ajax({url:"http://localhost:21567/log/AaBbCcDdEeFfGgHhIiJjKkLlMn", async:true, error: function(){
+					$("#daemon").html("离线");
+					$("#daemonping").html("连接超时");
+				}, success: function() {
+					var end = new Date() - start;
+					$("#daemonping").html(end + " 毫秒");
+					$("#daemon").html("在线");
+				}});
+				var start2 = new Date();
+				htmlobj1=$.ajax({url:"?do=status", async:true, error: function(){
+					$("#minecraft").html("离线");
+					$("#minecraftping").html("连接超时");
+				}, success: function() {
+					var end = new Date() - start2;
+					$("#minecraftping").html(end + " 毫秒");
+					$("#minecraft").html("在线");
+				}});
+				htmlobj2=$.ajax({url:"?do=version", async:true, error: function(){
+					$("#daemonversion").html(htmlobj2.responseText.replace(/错误：/g, ""));
+				},});
+				htmlobj3=$.ajax({url:"?do=encrypt", async:true, error: function(){
+					$("#daemonencrypt").html(htmlobj3.responseText.replace(/错误：/g, ""));
+				},});
+			}
+			// setTimeout("connectInfo()", 2000);
+		</script>
+    </body>
+
+</html>
